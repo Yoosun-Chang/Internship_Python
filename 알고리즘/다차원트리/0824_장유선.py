@@ -1,24 +1,22 @@
 # Point 클래스
 class Point:
     def __init__(self, x, y):
-        self.x = x  # x 좌표
-        self.y = y  # y 좌표
+        self.x = x  
+        self.y = y 
 
 # Rectangle 클래스
 class Rectangle:
     def __init__(self, x, y, w, h):
-        self.x = x  # 사각 영역의 중심 x 좌표
-        self.y = y  # 사각 영역의 중심 y 좌표
-        self.w = w  # 사각 영역의 가로 크기
-        self.h = h  # 사각 영역의 세로 크기
+        self.x = x  
+        self.y = y  
+        self.w = w 
+        self.h = h  
 
     def contains(self, point):
-        # 주어진 점이 사각 영역 내에 있는지 확인
         return (self.x - self.w <= point.x <= self.x + self.w and
                 self.y - self.h <= point.y <= self.y + self.h)
 
     def intersects(self, other):
-        # 다른 사각 영역과 현재 사각 영역이 교차하는지 확인
         return not (other.x - other.w > self.x + self.w or
                     other.x + other.w < self.x - self.w or
                     other.y - other.h > self.y + self.h or
@@ -27,20 +25,12 @@ class Rectangle:
 # QuadTree 클래스
 class QuadTree:
     def __init__(self, boundary, capacity):
-        """
-        QuadTree 생성
-        boundary: 현재 노드의 영역을 나타내는 Rectangle 객체
-        capacity: 노드에 저장할 수 있는 최대 점의 개수
-        """
-        self.boundary = boundary  # 현재 노드의 영역 (x, y, w, h)
-        self.capacity = capacity  # 노드에 저장할 수 있는 최대 점의 개수
-        self.points = []          # 현재 노드에 저장된 점들
-        self.divided = False      # 노드가 분할되었는지 여부
+        self.boundary = boundary  
+        self.capacity = capacity  
+        self.points = []          
+        self.divided = False      
 
     def subdivide(self):
-        """
-        현재 노드를 4개의 하위 노드로 분할하는 메서드
-        """
         x, y, w, h = self.boundary.x, self.boundary.y, self.boundary.w, self.boundary.h
         half_w = w / 2
         half_h = h / 2
@@ -55,11 +45,6 @@ class QuadTree:
         self.divided = True
 
     def insert(self, point):
-        """
-        점을 Quad Tree에 삽입하는 메서드
-        point: 삽입할 점을 나타내는 Point 객체
-        return: 삽입에 성공하면 True, 실패하면 False를 반환
-        """
         if not self.boundary.contains(point):
             return False
 
@@ -76,11 +61,6 @@ class QuadTree:
                 return True
 
     def get(self, range, found=None):
-        """
-        주어진 범위 내의 모든 점을 검색하는 메서드
-        range: 검색할 범위를 나타내는 Rectangle 객체
-        found: 검색된 점을 저장할 리스트 (재귀 호출 시 사용)
-        """
         if found is None:
             found = []
 
@@ -98,7 +78,7 @@ class QuadTree:
 
         return found
         
-# 두 점 사이의 유클리드 거리를 계산
+# 두 점 사이의 거리 계산
 def calculate_distance(point1, point2):
     return math.sqrt((point1.x - point2.x) ** 2 + (point1.y - point2.y) ** 2)
 
